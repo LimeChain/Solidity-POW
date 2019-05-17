@@ -25,7 +25,7 @@ describe('Example', () => {
     beforeEach(async () => {
         deployer = new etherlime.EtherlimeGanacheDeployer(aliceAccount.secretKey);
         difficulty = ethers.utils.bigNumberify(2);
-        difficulty = difficulty.pow(240)
+        difficulty = difficulty.pow(245)
         faucetInstance = await deployer.deploy(POWFaucet, {}, difficulty);
     });
 
