@@ -9,7 +9,16 @@ const deploy = async (network, secret, etherscanApiKey) => {
 	difficulty = difficulty.pow(240)
 
 	const deployer = new etherlime.InfuraPrivateKeyDeployer(secret, network, "ede61953adb34beeb5106a2c0c61f200", { etherscanApiKey });
-	const result = await deployer.deployAndVerify(POWFaucet, {}, difficulty);
+	const faucetInstance = await deployer.deployAndVerify(POWFaucet, {}, difficulty);
+
+	const sendAmount = ethers.utils.parseEther('10.0')
+
+	const tx = await deployer.signer.sendTransaction({
+		to: faucetInstance.contractAddress,
+		value: sendAmount
+	});
+
+	await faucetInstance.verboseWaitForTransaction(tx, "Funding")
 
 };
 
